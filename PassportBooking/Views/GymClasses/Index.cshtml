@@ -1,0 +1,101 @@
+﻿
+@model IEnumerable<GymClassIndexViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@ViewData["TempTitle"]</h1>
+@if (@TempData["Message"] != null)
+{
+    <div role="alert" class="alert alert-success alert-dismissible ">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["Message"]
+    </div>
+}
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create">Add New Pass</a>
+    }
+</p>
+<table data-toggle="table"
+       data-classes="table table-hover table-condensed"
+       data-striped="true"
+       data-sort-order="desc"
+       data-sort-name="StartTime"
+       data-pagination="true"
+       data-page-list="[5,10, 20, ALL]"
+       data-page-size="20">
+    <thead class="thead-dark">
+        <tr>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th class="border-0" data-sortable="true">
+                @Html.DisplayNameFor(model => model.AttendingMembersCount)
+            </th>
+            <th class="border-0"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttendingMembersCount)
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated == true)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><span>|</span>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (item.StartTime >= DateTime.Now)
+                        {
+                            <span>|</span>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> <span>|</span>
+                        }
+                        @if (item.StartTime >= DateTime.Now)
+                        {
+                            <a asp-action="BookingToggle" asp-route-id="@item.Id"> Book/Unbook </a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="gymclasses"></div>

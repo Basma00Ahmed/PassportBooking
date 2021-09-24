@@ -1,0 +1,51 @@
+﻿@model GymClassIndexViewModel
+
+<div>
+    <h4>GymClass Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AttendingMembersCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AttendingMembersCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Members)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var member in Model.Members)
+             {
+                @*<a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@member.Id">@member.FullName</a>*@
+            <p>- @member.FullName</p>
+              }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+</div>
